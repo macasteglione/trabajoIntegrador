@@ -31,7 +31,7 @@ public class Colectivo {
     public void setLinea(Linea linea) {
         this.linea = linea;
     }
-    
+
     public int getCantidadAsientos() {
         return cantidadAsientos;
     }
@@ -56,16 +56,16 @@ public class Colectivo {
         pasajeros.remove(pasajero);
     }
 
+    public void eliminarPasajeros(List<Pasajero> pasajerosEliminar) {
+        pasajeros.removeAll(pasajerosEliminar);
+    }
+
     public void setParadaActual(Parada siguienteParada) {
         this.paradaActual = siguienteParada;
     }
 
     public Parada getParadaActual() {
         return paradaActual;
-    }
-
-    public void setCantidadPasajeros(int cantidadPasajeros) {
-        this.totalPasajeros = cantidadPasajeros;
     }
 
     public void setNumeroRecorridos(int numeroRecorridos) {
@@ -81,5 +81,15 @@ public class Colectivo {
         } else {
             System.out.println("No hay suficientes asientos disponibles para subir a todos los pasajeros.");
         }
+    }
+
+    public void agregarPasajeros(List<Pasajero> pasajerosAgregar) {
+        int asientosDisponibles = cantidadAsientos - pasajeros.size();
+        int cantidadPasajerosAgregar = Math.min(asientosDisponibles, pasajerosAgregar.size());
+        pasajeros.addAll(pasajerosAgregar.subList(0, cantidadPasajerosAgregar));
+    }
+
+    public void vaciarPasajeros() {
+        pasajeros.clear();
     }
 }

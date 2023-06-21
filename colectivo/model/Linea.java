@@ -9,15 +9,11 @@ public class Linea {
 
     public Linea(String id) {
         this.id = id;
-        paradas = new ArrayList<>();
+        this.paradas = new ArrayList<>();
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setParadas(List<Parada> paradas) {
-        this.paradas = paradas;
     }
 
     public List<Parada> getParadas() {
@@ -26,9 +22,5 @@ public class Linea {
 
     public void agregarParada(Parada parada) {
         paradas.add(parada);
-    }
-
-    public void eliminarParada(Parada parada) {
-        paradas.remove(parada);
     }
 }

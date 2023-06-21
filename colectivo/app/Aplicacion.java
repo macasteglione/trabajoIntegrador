@@ -1,13 +1,10 @@
 package colectivo.app;
 
 import colectivo.logica.Simulacion;
-import colectivo.model.Colectivo;
-import colectivo.model.Linea;
-import colectivo.model.Parada;
+import colectivo.model.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 import colectivo.data.*;
 
@@ -19,17 +16,9 @@ public class Aplicacion {
             List<Linea> lineas = CargarArchivos.getLineas();
             List<Parada> paradas = CargarArchivos.getParadas();
             List<Colectivo> colectivos = CargarArchivos.getColectivos();
-            Properties config = CargarArchivos.getConfig();
-            int cantidadPasajeros = CargarArchivos.getCantidadPasajeros();
-            int numeroRecorridos = CargarArchivos.getNumeroRecorridos();
 
-            // Establecer las propiedades adicionales en la simulación
-            for (Colectivo colectivo : colectivos) {
-                colectivo.setCantidadPasajeros(cantidadPasajeros);
-                colectivo.setNumeroRecorridos(numeroRecorridos);
-            }
             // Crear la instancia de la simulación y pasar las listas y la configuración
-            Simulacion simulacion = new Simulacion(paradas, lineas, colectivos, config);
+            Simulacion simulacion = new Simulacion(lineas, colectivos);
 
             // Iniciar la simulación
             simulacion.iniciarSimulacion();
