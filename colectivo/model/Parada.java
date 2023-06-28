@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Parada {
     private String id;
-    private String direccion;
-    private Linea linea;
-    private List<Pasajero> pasajeros;
+    private String direccion; // Dirección de la parada
+    private Linea linea; // Línea a la que pertenece la parada
+    private List<Pasajero> pasajeros; // Lista de pasajeros en la parada
 
     public Parada() {
     }
@@ -31,7 +31,7 @@ public class Parada {
     }
 
     public List<Pasajero> getPasajeros() {
-        return pasajeros;
+        return pasajeros; // Devuelve la lista de pasajeros en la parada
     }
 
     @Override
