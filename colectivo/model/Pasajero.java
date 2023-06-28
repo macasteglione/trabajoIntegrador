@@ -1,19 +1,31 @@
 package colectivo.model;
 
 public class Pasajero {
-    private int id;
-    private Parada destino;
+    Parada parada;
+    private Colectivo colectivo;
 
-    public Pasajero(int i, Parada destino) {
-        this.id = i;
-        this.destino = destino;
+    public Pasajero(Parada parada, Colectivo colectivo) {
+        this.parada = parada;
+        this.colectivo = colectivo;
     }
 
-    public int getId() {
-        return id;
+    public Colectivo getColectivo() {
+        return colectivo;
     }
 
-    public Parada getDestino() {
-        return destino;
+    private int calificacion;
+
+    public int getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(int calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Pasajero [parada: " + parada.getId() + "\ncolectivo: " + (colectivo != null ? colectivo.getId() : "N/A")
+                + "]";
     }
 }

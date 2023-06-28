@@ -4,86 +4,122 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Properties;
 import colectivo.model.*;
 
 public class Datos {
-    public static List<Colectivo> cargarColectivos(String rutaArchivo) {
-        List<Colectivo> colectivos = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null)
-                if (!linea.startsWith("#")) {
-                    String[] partes = linea.split(";");
-                    String idColectivo = partes[0];
-                    Linea idLinea = new Linea(partes[1]);
-                    int cantidadAsientos = Integer.parseInt(partes[2]);
-                    int totalPasajeros = Integer.parseInt(partes[3]);
-                    colectivos.add(new Colectivo(idColectivo, idLinea, cantidadAsientos, totalPasajeros));
-                }
-        } catch (IOException e) {
-            e.printStackTrace();
+    private List<Colectivo> colectivos;
+    private List<Linea> lineas;
+    private List<Parada> paradas;
+    private int totalPasajeros;
+    private int recorridos;
+
+    public Datos() {
+        colectivos = new ArrayList<>();
+        lineas = new ArrayList<>();
+        paradas = new ArrayList<>();
+    }
+
+    public void cargarConfiguracion(String configFilePath) throws IOException {
+        Properties properties = new Properties();
+        properties.load(new FileReader(configFilePath));
+        String lineaFilePath = properties.getProperty("linea");
+        String paradaFilePath = properties.getProperty("parada");
+        String colectivoFilePath = properties.getProperty("colectivo");
+        totalPasajeros = Integer.parseInt(properties.getProperty("pasajeros"));
+        recorridos = Integer.parseInt(properties.getProperty("recorridos"));
+        cargarLineas(lineaFilePath); // tiempo muerto, solo para tener las lineas
+        cargarParadas(paradaFilePath);
+        cargarColectivos(colectivoFilePath);
+        cargarLineas(lineaFilePath);
+    }
+
+    private void cargarLineas(String filePath) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] data = line.split(";");
+            String id = data[0];
+            String[] paradaIds = Arrays.copyOfRange(data, 1, data.length);
+            List<Parada> paradasLinea = new ArrayList<>();
+            for (String paradaId : paradaIds) {
+                Parada parada = buscarParadaPorId(paradaId);
+                if (parada != null)
+                    paradasLinea.add(parada);
+            }
+            Linea linea = new Linea(id, paradasLinea);
+            lineas.add(linea);
         }
+        reader.close();
+    }
+
+    private void cargarColectivos(String filePath) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] data = line.split(";");
+            String id = data[0];
+            String lineaId = data[1];
+            int asientos = Integer.parseInt(data[2]);
+            int totalPasajeros = Integer.parseInt(data[3]);
+            Linea linea = buscarLineaPorId(lineaId);
+            if (linea != null) {
+                Colectivo colectivo = new Colectivo(id, asientos, totalPasajeros, new ArrayList<>());
+                colectivo.setLinea(lineaId);
+                colectivos.add(colectivo);
+            }
+        }
+        reader.close();
+    }
+
+    private void cargarParadas(String filePath) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] data = line.split(";");
+            String id = data[0];
+            String direccion = data[1];
+            String lineaID = data[2];
+            Linea linea = buscarLineaPorId(lineaID);
+            Parada parada = new Parada(id, direccion, linea, new ArrayList<>());
+            paradas.add(parada);
+        }
+        reader.close();
+    }
+
+    private Linea buscarLineaPorId(String id) {
+        for (Linea linea : lineas)
+            if (linea.getId().equals(id))
+                return linea;
+        return null;
+    }
+
+    private Parada buscarParadaPorId(String id) {
+        for (Parada parada : paradas)
+            if (parada.getId().equals(id))
+                return parada;
+        return null;
+    }
+
+    public List<Colectivo> getColectivos() {
         return colectivos;
     }
 
-    public static List<Linea> cargarLineas(String rutaArchivoLinea, String rutaArchivoDireccion) {
-        List<Linea> lineas = new ArrayList<>();
-        Map<String, String> direccionMap = cargarDireccionMap(rutaArchivoDireccion);
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivoLinea))) {
-            String linea;
-            while ((linea = br.readLine()) != null)
-                if (!linea.startsWith("#")) {
-                    String[] partes = linea.split(";");
-                    String idLinea = partes[0];
-                    String[] paradaIds = partes[1].split(",");
-                    Linea nuevaLinea = new Linea(idLinea);
-                    for (String idParada : paradaIds) {
-                        String direccion = direccionMap.getOrDefault(idParada, "");
-                        Parada parada = new Parada(idParada, direccion);
-                        nuevaLinea.agregarParada(parada);
-                    }
-                    lineas.add(nuevaLinea);
-                }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public List<Linea> getLineas() {
         return lineas;
     }
 
-    public static Map<String, String> cargarDireccionMap(String rutaArchivo) {
-        Map<String, String> direccionMap = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null)
-                if (!linea.startsWith("#")) {
-                    String[] partes = linea.split(";");
-                    String idParada = partes[0];
-                    String direccion = partes[1];
-                    direccionMap.put(idParada, direccion);
-                }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return direccionMap;
+    public List<Parada> getParadas() {
+        return paradas;
     }
 
-    public static List<Parada> cargarParadas(String rutaArchivo) {
-        List<Parada> paradas = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null)
-                if (!linea.startsWith("#")) {
-                    String[] partes = linea.split(";");
-                    String idParada = partes[0];
-                    String direccion = partes[1];
-                    paradas.add(new Parada(idParada, direccion));
-                }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return paradas;
+    public int getTotalPasajeros() {
+        return totalPasajeros;
+    }
+
+    public int getRecorridos() {
+        return recorridos;
     }
 }

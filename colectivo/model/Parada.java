@@ -1,17 +1,21 @@
 package colectivo.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Parada {
     private String id;
     private String direccion;
-    private List<Pasajero> listaPasajeros;
+    private Linea linea;
+    private List<Pasajero> pasajeros;
 
-    public Parada(String id, String direccion) {
+    public Parada() {
+    }
+
+    public Parada(String id, String direccion, Linea linea, List<Pasajero> pasajeros) {
         this.id = id;
         this.direccion = direccion;
-        this.listaPasajeros = new ArrayList<>();
+        this.linea = linea;
+        this.pasajeros = pasajeros;
     }
 
     public String getId() {
@@ -22,11 +26,17 @@ public class Parada {
         return direccion;
     }
 
-    public List<Pasajero> getListaPasajeros() {
-        return listaPasajeros;
+    public Linea getLinea() {
+        return linea;
     }
 
-    public void agregarPasajero(Pasajero pasajero) {
-        listaPasajeros.add(pasajero);
+    public List<Pasajero> getPasajeros() {
+        return pasajeros;
+    }
+
+    @Override
+    public String toString() {
+        return "Parada [id: " + id + "\ndireccion: " + direccion + "\nlinea: " + linea + "\npasajeros: "
+                + pasajeros.size() + "]";
     }
 }

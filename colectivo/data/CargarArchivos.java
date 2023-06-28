@@ -1,27 +1,34 @@
 package colectivo.data;
 
+import colectivo.model.*;
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
-import colectivo.model.*;
 
 public class CargarArchivos {
+
+    private static List<Colectivo> colectivos;
     private static List<Linea> lineas;
     private static List<Parada> paradas;
-    private static List<Colectivo> colectivos;
-    private static Properties config;
-    private static int cantidadPasajeros, numeroRecorridos;
+    private static int recorridos;
+    private static int getTotalPasajeros;
 
-    public static void cargar() throws IOException {
-        config = CargarConfig.cargarConfiguracion("./config.properties");
-        String rutaLinea = config.getProperty("linea");
-        String rutaParada = config.getProperty("parada");
-        String rutaColectivo = config.getProperty("colectivo");
-        lineas = Datos.cargarLineas(rutaLinea, rutaParada);
-        paradas = Datos.cargarParadas(rutaParada);
-        colectivos = Datos.cargarColectivos(rutaColectivo);
-        cantidadPasajeros = Integer.parseInt(config.getProperty("pasajeros"));
-        numeroRecorridos = Integer.parseInt(config.getProperty("recorridos"));
+    public static void cargarDatos() {
+        Datos system = new Datos();
+        try {
+            system.cargarConfiguracion("config.properties");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        colectivos = system.getColectivos();
+        lineas = system.getLineas();
+        paradas = system.getParadas();
+        recorridos = system.getRecorridos();
+        getTotalPasajeros = system.getTotalPasajeros();
+        lineas.removeIf(linea -> linea.getParadas().isEmpty());
+    }
+
+    public static List<Colectivo> getColectivos() {
+        return colectivos;
     }
 
     public static List<Linea> getLineas() {
@@ -32,19 +39,11 @@ public class CargarArchivos {
         return paradas;
     }
 
-    public static List<Colectivo> getColectivos() {
-        return colectivos;
+    public static int getRecorridos() {
+        return recorridos;
     }
 
-    public static Properties getConfig() {
-        return config;
-    }
-
-    public static int getCantidadPasajeros() {
-        return cantidadPasajeros;
-    }
-
-    public static int getNumeroRecorridos() {
-        return numeroRecorridos;
+    public static int getTotalPasajeros() {
+        return getTotalPasajeros;
     }
 }
