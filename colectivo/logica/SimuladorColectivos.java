@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 public class SimuladorColectivos {
-    private List<Colectivo> colectivos;
-
-    public SimuladorColectivos() {
-        colectivos = CargarArchivos.getColectivos();
-    }
 
     public void simularViajes() {
         CargarArchivos.cargarDatos();
