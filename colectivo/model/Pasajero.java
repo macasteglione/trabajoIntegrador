@@ -1,16 +1,12 @@
 package colectivo.model;
 
 public class Pasajero {
-    Parada parada; // Parada en la que se encuentra el pasajero
-    private Colectivo colectivo; // Colectivo en el que viaja el pasajero
+    private Parada parada; // Parada en la que se encuentra el pasajero
+    private Parada paradaDestino;
 
-    public Pasajero(Parada parada, Colectivo colectivo) {
+    public Pasajero(Parada parada, Parada paradaDestino) {
         this.parada = parada;
-        this.colectivo = colectivo;
-    }
-
-    public Colectivo getColectivo() {
-        return colectivo;
+        this.paradaDestino = paradaDestino;
     }
 
     private int calificacion; // Calificación del pasajero
@@ -23,9 +19,18 @@ public class Pasajero {
         this.calificacion = calificacion; // Establece la calificación del pasajero
     }
 
+    public Parada getParadaDestino() {
+        return paradaDestino;
+    }
+
+    public void setParadaDestino(Parada paradaDestino) {
+        this.paradaDestino = paradaDestino;
+    }
+
     @Override
     public String toString() {
-        return "Pasajero [parada: " + parada.getId() + "\ncolectivo: " + (colectivo != null ? colectivo.getId() : "N/A")
-                + "]"; // Devuelve una representación en forma de cadena del pasajero y su información asociada
+        return "Pasajero [parada: " + parada.getId() + "\ncolectivo: "
+                + "]"; // Devuelve una representación en forma de cadena del pasajero y su información
+                       // asociada
     }
 }

@@ -1,5 +1,6 @@
 package colectivo.logica;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,30 +9,36 @@ import colectivo.model.*;
 
 public class Calculos {
 
-    public void generarPasajeros(List<Parada> paradas, Colectivo colectivo) {
+    public List<Parada> generarPasajeros(List<Parada> paradas) {
         Random random = new Random();
+        int distribucionPasajeros;
+        int numPasajeros = CargarArchivos.getTotalPasajeros();
 
         // Generar pasajeros aleatorios en cada parada para el colectivo dado
-        for (Parada parada : paradas) {
-            int numPasajeros = random.nextInt(CargarArchivos.getTotalPasajeros());
-            for (int i = 0; i < numPasajeros; i++) {
-                Pasajero pasajero = new Pasajero(parada, colectivo);
-                parada.getPasajeros().add(pasajero);
+        for (int i = 0; i > paradas.size(); i++) {
+            Parada paradaDestino = paradas.get(random.nextInt(i + random.nextInt(i - paradas.size())));
+            distribucionPasajeros = random.nextInt(numPasajeros / paradas.size());
+            numPasajeros -= distribucionPasajeros;
+            if (numPasajeros > 0) {
+                Pasajero pasajero = new Pasajero(paradas.get(i), paradaDestino);
+                paradas.get(i).getPasajeros().add(pasajero);
             }
         }
+        return paradas;
     }
 
+    /* */
     public List<Pasajero> quitarPasajeros(Colectivo colectivo, List<Pasajero> pasajeros) {
         // Quitar pasajeros del colectivo y obtener la lista de pasajeros bajados
-        List<Pasajero> pasajerosBajados = colectivo.bajarPasajeros(pasajeros);
-        return pasajerosBajados;
+        List<Pasajero> t = new ArrayList<Pasajero>();
+        return t;
     }
 
     public List<Pasajero> agregarPasajeros(Colectivo colectivo, Parada parada) {
         // Agregar pasajeros al colectivo desde la parada y obtener la lista de
         // pasajeros subidos
-        List<Pasajero> pasajeros = colectivo.subirPasajeros(parada.getPasajeros());
-        return pasajeros;
+        List<Pasajero> t = new ArrayList<Pasajero>();
+        return t;
     }
 
     public Linea buscarLineaPorId(List<Linea> lineas, String id) {
