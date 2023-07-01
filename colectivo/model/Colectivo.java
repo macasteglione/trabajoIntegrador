@@ -5,27 +5,24 @@ import java.util.List;
 public class Colectivo {
     private String id;
     private int asientos;
-    private int totalPasajeros; // Número total de pasajeros en el colectivo
+    private int capacidadMaxima; // Número total de pasajeros en el colectivo
     private List<Pasajero> pasajeros; // Lista de pasajeros en el colectivo
-    private Parada parada; // Parada actual del colectivo
-    private String linea;
+    private Linea linea;
 
-    public Colectivo(String id, int asientos, int totalPasajeros, List<Pasajero> pasajeros) {
+    public Colectivo(String id, int asientos, int capacidadMaxima, List<Pasajero> pasajeros, Linea linea) {
         this.id = id;
         this.asientos = asientos;
-        this.totalPasajeros = totalPasajeros;
+        this.capacidadMaxima = capacidadMaxima;
         this.pasajeros = pasajeros;
-    }
-
-    public Colectivo() {
+        this.linea = linea;
     }
 
     public String getId() {
         return id;
     }
 
-    public int getTotalPasajeros() {
-        return totalPasajeros;
+    public int getCapacidadMaxima() {
+        return capacidadMaxima - pasajeros.size();
     }
 
     public List<Pasajero> getPasajeros() {
@@ -36,22 +33,21 @@ public class Colectivo {
         this.pasajeros = pasajeros;
     }
 
-    public String getLinea() {
+    public Linea getLinea() {
         return linea;
     }
 
-    public void setLinea(String lineaId) {
-        this.linea = lineaId;
+    public void setLinea(Linea linea) {
+        this.linea = linea;
     }
 
     public int getAsientosDisponibles() {
-        return asientos - totalPasajeros;
+        return asientos - pasajeros.size();
     }
 
     @Override
     public String toString() {
-        return "Colectivo [id: " + id + "\nAsientos: " + asientos + "\ntotalPasajeros: " + totalPasajeros
-                + "\npasajeros: " + pasajeros.size() + ", Linea: " + parada.getLinea().getId() + ", Parada: "
-                + parada.getId() + "]"; // Devuelve una representación en forma de cadena del colectivo y su estado
+        return "Colectivo [id: " + id + "\nAsientos: " + asientos + "\ntotalPasajeros: " + capacidadMaxima
+                + "\npasajeros: " + pasajeros.size() + ", Linea: " + linea + "]"; // Devuelve una representación en forma de cadena del colectivo y su estado
     }
 }

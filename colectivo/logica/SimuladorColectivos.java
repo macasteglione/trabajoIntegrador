@@ -1,86 +1,76 @@
 package colectivo.logica;
 
 import colectivo.data.CargarArchivos;
-import colectivo.model.*;
+import colectivo.model.Colectivo;
+import colectivo.model.Parada;
+import colectivo.model.Pasajero;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SimuladorColectivos {
 
     public void simularViajes() {
-        // Cargar los datos
         CargarArchivos.cargarDatos();
         Calculos calc = new Calculos();
-
-        // Obtener las listas de colectivos, líneas y paradas
         List<Colectivo> colectivos = CargarArchivos.getColectivos();
-        List<Linea> lineas = CargarArchivos.getLineas();
-        List<Parada> paradas = CargarArchivos.getParadas();
-        int recorridos;
-        paradas = calc.generarPasajeros(paradas);
-        System.out.println(paradas);
-        
-        // Iterar sobre los colectivos para simular los viajes individuales
+        List<Integer> calificaciones = new ArrayList<>();
+        int pasajerosConfig = CargarArchivos.getTotalPasajerosConfig();
+        int pasajerosTransportadosTotal = 0;
         for (Colectivo colectivo : colectivos) {
-            // Generar pasajeros aleatorios en cada parada para el colectivo actual
-
-            // Obtener la línea correspondiente al colectivo actual
-            Linea linea = calc.buscarLineaPorId(lineas, colectivo.getLinea());
-
-            // Obtener el número de recorridos en la línea
-            recorridos = CargarArchivos.getRecorridos();
-            List<Parada> paradasLinea = linea.getParadas();
-
-            // Imprimir información del colectivo y la línea
+            int recorridos = CargarArchivos.getRecorridos();
             System.out.println("Colectivo ID: " + colectivo.getId());
-            System.out.println("Linea: " + colectivo.getLinea());
-            System.out.println("Asientos disponibles: " + colectivo.getAsientosDisponibles());
+            System.out.println("Linea: " + colectivo.getLinea().getId());
+            System.out.println("Capacidad de pasajeros: " + colectivo.getCapacidadMaxima());
             System.out.println("Recorridos restantes: " + recorridos);
             System.out.println("Paradas visitadas:");
-
-            // Obtener la lista de paradas de la línea
-
-            // Inicializar variables para el conteo de pasajeros
-            int totalPasajerosSubieron = 0;
-            int totalPasajerosBajaron = 0;
-
-            // Realizar el recorrido por las paradas de la línea
+            int pasajerosTransportados = 0;
             while (recorridos > 0) {
-                for (int i = 0; i < paradasLinea.size(); i++) {
-                    // Seleccionar una parada aleatoria de la línea
-                    Parada paradaActual = paradasLinea.get(i);
-                    System.out.println(paradaActual.getPasajeros().size());
-                    // Imprimir información de la parada actual
+                for (Parada paradaActual : colectivo.getLinea().getParadas()) {
+                    int totalPasajerosSubieron = 0;
+                    int totalPasajerosBajaron = 0;
+                    for (Iterator<Pasajero> it = paradaActual.getPasajeros().iterator(); it.hasNext();) {
+                        Pasajero pasajeroEnParada = it.next();
+                        pasajeroEnParada.setEsperando(pasajeroEnParada.getEsperando() + 1);
+                        if (pasajeroEnParada.getParadaDestino().getLinea().getId().equals(colectivo.getLinea().getId())
+                                && colectivo.getCapacidadMaxima() > 0) {
+                            if (pasajeroEnParada.getEsperando() > 2)
+                                calificaciones.add(2);
+                            else if (pasajeroEnParada.getEsperando() == 2)
+                                calificaciones.add(3);
+                            else if (colectivo.getAsientosDisponibles() <= 0)
+                                calificaciones.add(4);
+                            else if (colectivo.getAsientosDisponibles() > 0)
+                                calificaciones.add(5);
+                            totalPasajerosSubieron++;
+                            colectivo.getPasajeros().add(pasajeroEnParada);
+                            it.remove();
+                        }
+                    }
+                    for (Iterator<Pasajero> iterator = colectivo.getPasajeros().iterator(); iterator.hasNext();) {
+                        Pasajero pasajeroEnColectivo = iterator.next();
+                        if (pasajeroEnColectivo.getParadaDestino().getDireccion().equals(paradaActual.getDireccion())) {
+                            totalPasajerosBajaron++;
+                            pasajerosTransportados++;
+                            iterator.remove();
+                        }
+                    }
                     System.out.println(
                             "- Parada ID: " + paradaActual.getId() + ", Dirección: " + paradaActual.getDireccion());
-
-                    // Obtener los pasajeros de la parada actual
-
-                    // Realizar la acción de quitar pasajeros del colectivo
-                    List<Pasajero> pasajerosBajados = calc.quitarPasajeros(colectivo, paradaActual.getPasajeros());
-                    
-                    // Realizar la acción de agregar pasajeros al colectivo
-                    List<Pasajero> pasajerosSubidos = calc.agregarPasajeros(colectivo, paradaActual);
-
-                    // Imprimir información sobre los pasajeros que subieron y bajaron
-                    System.out.println("  Pasajeros que bajaron: " + pasajerosBajados.size());
-                    System.out.println("  Pasajeros que subieron: " + pasajerosSubidos.size());
-                    System.out.println(
-                            "Pasajeros en la parada: " + paradaActual.getPasajeros().size() + "\n");
-
-                    // Actualizar el conteo total de pasajeros
-                    totalPasajerosSubieron += pasajerosSubidos.size();
-                    totalPasajerosBajaron += pasajerosBajados.size();
+                    System.out.println("Asientos disponibles: " + colectivo.getAsientosDisponibles());
+                    System.out.println("Capacidad del colectivo: " + colectivo.getCapacidadMaxima());
+                    System.out.println("  Pasajeros que subieron: " + totalPasajerosSubieron);
+                    System.out.println("  Pasajeros que bajaron: " + totalPasajerosBajaron);
+                    System.out
+                            .println("Pasajeros esperando en la parada: " + paradaActual.getPasajeros().size() + "\n");
                 }
-                // Reducir el número de recorridos restantes
                 recorridos--;
             }
-
-            // Imprimir información final del colectivo
-            System.out.println();
-            double indiceSatisfaccion = calc.calcularIndiceSatisfaccion(totalPasajerosSubieron, totalPasajerosBajaron);
-            System.out.println("Índice de satisfacción del cliente: " + (indiceSatisfaccion * 100) + "%");
-            double ocupacionPromedio = calc.calcularOcupacionPromedio(colectivo, linea);
-            System.out.println("Ocupación promedio: " + (ocupacionPromedio * 100) + "%");
+            pasajerosTransportadosTotal += pasajerosTransportados;
+            calc.calcularOcupacionPromedio(colectivo, pasajerosTransportados);
         }
+        for (int i = 0; i < pasajerosConfig - pasajerosTransportadosTotal; i++)
+            calificaciones.add(1);
+        calc.calcularIndiceSatisfaccion(calificaciones);
     }
 }

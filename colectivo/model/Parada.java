@@ -4,12 +4,9 @@ import java.util.List;
 
 public class Parada {
     private String id;
-    private String direccion; // Dirección de la parada
-    private Linea linea; // Línea a la que pertenece la parada
-    private List<Pasajero> pasajeros; // Lista de pasajeros en la parada
-
-    public Parada() {
-    }
+    private String direccion;
+    private Linea linea;
+    private List<Pasajero> pasajeros;
 
     public Parada(String id, String direccion, Linea linea, List<Pasajero> pasajeros) {
         this.id = id;
@@ -31,12 +28,12 @@ public class Parada {
     }
 
     public List<Pasajero> getPasajeros() {
-        return pasajeros; // Devuelve la lista de pasajeros en la parada
+        return pasajeros;
     }
 
     @Override
     public String toString() {
-        return "Parada [id: " + id + "\ndireccion: " + direccion + "\nlinea: " + linea + "\npasajeros: "
-                + pasajeros.size() + "]";
+        return "Parada [id: " + id + ", direccion: " + direccion + ", linea: " + linea.getId() + ", pasajeros: "
+                + pasajeros.size() + "]\n";
     }
 }
