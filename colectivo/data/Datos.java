@@ -10,6 +10,12 @@ import colectivo.model.Colectivo;
 import colectivo.model.Linea;
 import colectivo.model.Parada;
 
+/**
+ * Clase encargada de cargar los datos del sistema desde archivos y proporcionar
+ * acceso a ellos.
+ * 
+ * @author Matias Casteglione
+ */
 public class Datos {
     private List<Colectivo> colectivos;
     private List<Linea> lineas;
@@ -17,22 +23,31 @@ public class Datos {
     private int totalPasajeros;
     private int recorridos;
 
-    // Inicializar las listas de los objetos como una nueva lista vacía
+    /**
+     * Constructor de la clase Datos.
+     * Inicializa las listas de colectivos, líneas y paradas.
+     */
     public Datos() {
         colectivos = new ArrayList<>();
         lineas = new ArrayList<>();
         paradas = new ArrayList<>();
     }
 
+    /**
+     * Carga la configuración del sistema desde un archivo de propiedades.
+     *
+     * @param configFilePath la ruta del archivo de configuración
+     * @throws IOException si ocurre un error de lectura del archivo
+     */
     public void cargarConfiguracion(String configFilePath) throws IOException {
         Properties properties = new Properties();
         properties.load(new FileReader(configFilePath));
-        String lineaFilePath = properties.getProperty("linea"); // Ruta de los archivos
+        String lineaFilePath = properties.getProperty("linea");
         String paradaFilePath = properties.getProperty("parada");
         String colectivoFilePath = properties.getProperty("colectivo");
         totalPasajeros = Integer.parseInt(properties.getProperty("pasajeros"));
         recorridos = Integer.parseInt(properties.getProperty("recorridos"));
-        cargarLineas(lineaFilePath); // Cargar los datos desde el archivo
+        cargarLineas(lineaFilePath);
         cargarParadas(paradaFilePath);
         cargarLineas(lineaFilePath); // Cargar las líneas nuevamente (tiempo muerto, problema de dependencias)
         lineas.removeIf(linea -> linea.getParadas().isEmpty()); // Eliminar las líneas que no tienen paradas asociadas
@@ -41,7 +56,7 @@ public class Datos {
         paradas.removeIf(parada -> parada.getLinea().getParadas().isEmpty());
     }
 
-       private void cargarLineas(String filePath) throws IOException {
+    private void cargarLineas(String filePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
         while ((line = reader.readLine()) != null) {
@@ -93,37 +108,60 @@ public class Datos {
     }
 
     private Linea buscarLineaPorId(String id) {
-        for (Linea linea : lineas) {
+        for (Linea linea : lineas)
             if (linea.getId().equals(id))
                 return linea;
-        }
         return null;
     }
 
     private Parada buscarParadaPorId(String id) {
-        for (Parada parada : paradas) {
+        for (Parada parada : paradas)
             if (parada.getId().equals(id))
                 return parada;
-        }
         return null;
     }
 
+    /**
+     * Obtiene la lista de colectivos cargados en el sistema.
+     *
+     * @return la lista de colectivos
+     */
     public List<Colectivo> getColectivos() {
         return colectivos;
     }
 
+    /**
+     * Obtiene la lista de líneas cargadas en el sistema.
+     *
+     * @return la lista de líneas
+     */
     public List<Linea> getLineas() {
         return lineas;
     }
 
+    /**
+     * Obtiene la lista de paradas cargadas en el sistema.
+     *
+     * @return la lista de paradas
+     */
     public List<Parada> getParadas() {
         return paradas;
     }
 
+    /**
+     * Obtiene el número total de pasajeros configurado en el sistema.
+     *
+     * @return el número total de pasajeros
+     */
     public int getTotalPasajeros() {
         return totalPasajeros;
     }
 
+    /**
+     * Obtiene el número de recorridos configurados en el sistema.
+     *
+     * @return el número de recorridos
+     */
     public int getRecorridos() {
         return recorridos;
     }

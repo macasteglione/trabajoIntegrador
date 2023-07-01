@@ -8,8 +8,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Clase que simula los viajes de los colectivos y realiza cálculos
+ * relacionados.
+ * 
+ * @author Matias Casteglione
+ */
 public class SimuladorColectivos {
 
+    /**
+     * Simula los viajes de los colectivos y realiza los cálculos correspondientes.
+     */
     public void simularViajes() {
         CargarArchivos.cargarDatos();
         Calculos calc = new Calculos();
