@@ -1,4 +1,4 @@
-package colectivo.logica;
+package colectivo.logic;
 
 import java.util.List;
 import java.util.Random;

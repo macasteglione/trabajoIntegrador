@@ -1,4 +1,4 @@
-package colectivo.logica;
+package colectivo.logic;
 
 import colectivo.data.CargarArchivos;
 import colectivo.model.Colectivo;

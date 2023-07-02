@@ -1,6 +1,6 @@
 package colectivo.app;
 
-import colectivo.logica.SimuladorColectivos;
+import colectivo.logic.SimuladorColectivos;
 
 /**
  * Clase principal que inicia la aplicacion del simulador de colectivos.

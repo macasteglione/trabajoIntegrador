@@ -1,6 +1,6 @@
 package colectivo.data;
 
-import colectivo.logica.Calculos;
+import colectivo.logic.Calculos;
 import colectivo.model.Colectivo;
 import colectivo.model.Linea;
 import colectivo.model.Parada;
