@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase encargada de cargar los datos del sistema desde archivos y proporcionar
- * acceso a ellos.
+ * Clase encargada de cargar los datos del sistema desde archivos y 
+ * devolver las listas de los datos.
  * 
  * @author Matias Casteglione
  */
@@ -52,9 +52,9 @@ public class CargarArchivos {
     }
 
     /**
-     * Obtiene la lista de líneas cargadas en el sistema.
+     * Obtiene la lista de lineas cargadas en el sistema.
      *
-     * @return la lista de líneas
+     * @return la lista de lineas
      */
     public static List<Linea> getLineas() {
         return lineas;
@@ -70,18 +70,18 @@ public class CargarArchivos {
     }
 
     /**
-     * Obtiene el número de recorridos configurados en el sistema.
+     * Obtiene el numero de recorridos configurados en el sistema.
      *
-     * @return el número de recorridos
+     * @return el numero de recorridos
      */
     public static int getRecorridos() {
         return recorridos;
     }
 
     /**
-     * Obtiene el número total de pasajeros configurado en el sistema.
+     * Obtiene el numero total de pasajeros configurado en el sistema.
      *
-     * @return el número total de pasajeros
+     * @return el numero total de pasajeros
      */
     public static int getTotalPasajerosConfig() {
         return totalPasajerosConfig;

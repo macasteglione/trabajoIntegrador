@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Clase que simula los viajes de los colectivos y realiza cálculos
+ * Clase que simula los viajes de los colectivos y realiza calculos
  * relacionados.
  * 
  * @author Matias Casteglione
@@ -17,7 +17,7 @@ import java.util.List;
 public class SimuladorColectivos {
 
     /**
-     * Simula los viajes de los colectivos y realiza los cálculos correspondientes.
+     * Simula los viajes de los colectivos y realiza los calculos correspondientes.
      */
     public void simularViajes() {
         CargarArchivos.cargarDatos();
@@ -42,7 +42,7 @@ public class SimuladorColectivos {
                         Pasajero pasajeroEnParada = it.next();
                         pasajeroEnParada.setEsperando(pasajeroEnParada.getEsperando() + 1);
                         if (pasajeroEnParada.getParadaDestino().getLinea().getId().equals(colectivo.getLinea().getId())
-                                && colectivo.getCapacidadMaxima() > 0) {
+                                && colectivo.getPasajeros().size() != colectivo.getCapacidadMaxima()) {
                             if (pasajeroEnParada.getEsperando() > 2)
                                 calificaciones.add(2);
                             else if (pasajeroEnParada.getEsperando() == 2)
@@ -56,18 +56,18 @@ public class SimuladorColectivos {
                             it.remove();
                         }
                     }
-                    for (Iterator<Pasajero> iterator = colectivo.getPasajeros().iterator(); iterator.hasNext();) {
-                        Pasajero pasajeroEnColectivo = iterator.next();
+                    for (Iterator<Pasajero> it = colectivo.getPasajeros().iterator(); it.hasNext();) {
+                        Pasajero pasajeroEnColectivo = it.next();
                         if (pasajeroEnColectivo.getParadaDestino().getDireccion().equals(paradaActual.getDireccion())) {
                             totalPasajerosBajaron++;
                             pasajerosTransportados++;
-                            iterator.remove();
+                            it.remove();
                         }
                     }
                     System.out.println(
                             "- Parada ID: " + paradaActual.getId() + ", Dirección: " + paradaActual.getDireccion());
                     System.out.println("Asientos disponibles: " + colectivo.getAsientosDisponibles());
-                    System.out.println("Capacidad del colectivo: " + colectivo.getCapacidadMaxima());
+                    System.out.println("Pasajeros en el colectivo: " + colectivo.getPasajeros().size());
                     System.out.println("  Pasajeros que subieron: " + totalPasajerosSubieron);
                     System.out.println("  Pasajeros que bajaron: " + totalPasajerosBajaron);
                     System.out

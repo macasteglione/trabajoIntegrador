@@ -18,10 +18,10 @@ public class Colectivo {
      * Constructor de la clase Colectivo.
      * 
      * @param id              el ID del colectivo
-     * @param asientos        el número total de asientos del colectivo
-     * @param capacidadMaxima la capacidad máxima de pasajeros del colectivo
+     * @param asientos        el numero total de asientos del colectivo
+     * @param capacidadMaxima la capacidad maxima de pasajeros del colectivo
      * @param pasajeros       la lista de pasajeros actualmente en el colectivo
-     * @param linea           la línea a la que pertenece el colectivo
+     * @param linea           la linea a la que pertenece el colectivo
      */
     public Colectivo(String id, int asientos, int capacidadMaxima, List<Pasajero> pasajeros, Linea linea) {
         this.id = id;
@@ -41,12 +41,12 @@ public class Colectivo {
     }
 
     /**
-     * Obtiene la capacidad máxima de pasajeros del colectivo.
+     * Obtiene la capacidad maxima de pasajeros del colectivo.
      * 
-     * @return la capacidad máxima de pasajeros del colectivo
+     * @return la capacidad maxima de pasajeros del colectivo
      */
     public int getCapacidadMaxima() {
-        return capacidadMaxima - pasajeros.size();
+        return capacidadMaxima;
     }
 
     /**
@@ -68,18 +68,18 @@ public class Colectivo {
     }
 
     /**
-     * Obtiene la línea a la que pertenece el colectivo.
+     * Obtiene la linea a la que pertenece el colectivo.
      * 
-     * @return la línea a la que pertenece el colectivo
+     * @return la linea a la que pertenece el colectivo
      */
     public Linea getLinea() {
         return linea;
     }
 
     /**
-     * Establece la línea a la que pertenece el colectivo.
+     * Establece la linea a la que pertenece el colectivo.
      * 
-     * @param linea la línea a establecer
+     * @param linea la linea a establecer
      */
     public void setLinea(Linea linea) {
         this.linea = linea;

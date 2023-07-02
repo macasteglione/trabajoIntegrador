@@ -8,7 +8,7 @@ import colectivo.model.Pasajero;
 import colectivo.model.Colectivo;
 
 /**
- * Clase que contiene métodos para realizar cálculos relacionados con el sistema
+ * Clase que contiene metodos para realizar calculos relacionados con el sistema
  * de colectivos.
  * 
  * @author Matias Casteglione
@@ -16,10 +16,10 @@ import colectivo.model.Colectivo;
 public class Calculos {
 
     /**
-     * Genera pasajeros aleatoriamente y los asigna a las paradas de las líneas.
+     * Genera pasajeros aleatoriamente y los asigna a las paradas de las lineas.
      *
-     * @param lineas         la lista de líneas
-     * @param pasajerosTotal el número total de pasajeros a generar
+     * @param lineas         la lista de lineas
+     * @param pasajerosTotal el numero total de pasajeros a generar
      */
     public void generarPasajeros(List<Linea> lineas, int pasajerosTotal) {
         Random random = new Random();
@@ -41,7 +41,7 @@ public class Calculos {
     }
 
     /**
-     * Calcula el índice de satisfacción del cliente a partir de las calificaciones
+     * Calcula el indice de satisfaccion del cliente a partir de las calificaciones
      * recibidas.
      *
      * @param calificaciones la lista de calificaciones de los pasajeros
@@ -56,17 +56,17 @@ public class Calculos {
                 totalPuntos += calificacion;
             }
         double indiceSatisfaccion = totalPuntos / (100 * totalPasajeros);
-        System.out.println("Índice de satisfacción del cliente: " + (indiceSatisfaccion * 100) + "%");
+        System.out.println("Indice de satisfacción del cliente: " + (indiceSatisfaccion * 100) + "%");
         for (int i = 5; i >= 1; i--)
             System.out.println(calificacionesCont[i] + " pasajeros calificaron con " + i + " el servicio");
     }
 
     /**
-     * Calcula la ocupación promedio del colectivo en función de los pasajeros
+     * Calcula la ocupacion promedio del colectivo en funcion de los pasajeros
      * transportados.
      *
      * @param colectivo              el colectivo
-     * @param pasajerosTransportados el número de pasajeros transportados
+     * @param pasajerosTransportados el numero de pasajeros transportados
      */
     public void calcularOcupacionPromedio(Colectivo colectivo, int pasajerosTransportados) {
         int totalTramos = colectivo.getLinea().getParadas().size() - 1;

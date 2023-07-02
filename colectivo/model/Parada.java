@@ -17,8 +17,8 @@ public class Parada {
      * Constructor de la clase Parada.
      * 
      * @param id        el ID de la parada
-     * @param direccion la dirección de la parada
-     * @param linea     la línea a la que pertenece la parada
+     * @param direccion la direccion de la parada
+     * @param linea     la linea a la que pertenece la parada
      * @param pasajeros la lista de pasajeros en la parada
      */
     public Parada(String id, String direccion, Linea linea, List<Pasajero> pasajeros) {
@@ -38,18 +38,18 @@ public class Parada {
     }
 
     /**
-     * Obtiene la dirección de la parada.
+     * Obtiene la direccion de la parada.
      * 
-     * @return la dirección de la parada
+     * @return la direccion de la parada
      */
     public String getDireccion() {
         return direccion;
     }
 
     /**
-     * Obtiene la línea a la que pertenece la parada.
+     * Obtiene la linea a la que pertenece la parada.
      * 
-     * @return la línea a la que pertenece la parada
+     * @return la linea a la que pertenece la parada
      */
     public Linea getLinea() {
         return linea;

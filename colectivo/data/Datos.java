@@ -34,9 +34,9 @@ public class Datos {
     }
 
     /**
-     * Carga la configuración del sistema desde un archivo de propiedades.
+     * Carga la configuracion del sistema desde un archivo de propiedades.
      *
-     * @param configFilePath la ruta del archivo de configuración
+     * @param configFilePath la ruta del archivo de configuracion
      * @throws IOException si ocurre un error de lectura del archivo
      */
     public void cargarConfiguracion(String configFilePath) throws IOException {
@@ -49,10 +49,10 @@ public class Datos {
         recorridos = Integer.parseInt(properties.getProperty("recorridos"));
         cargarLineas(lineaFilePath);
         cargarParadas(paradaFilePath);
-        cargarLineas(lineaFilePath); // Cargar las líneas nuevamente (tiempo muerto, problema de dependencias)
-        lineas.removeIf(linea -> linea.getParadas().isEmpty()); // Eliminar las líneas que no tienen paradas asociadas
+        cargarLineas(lineaFilePath); // cargar las lineas nuevamente (tiempo muerto, problema de dependencias)
+        lineas.removeIf(linea -> linea.getParadas().isEmpty()); // eliminar las lineas que no tienen paradas asociadas
         cargarColectivos(colectivoFilePath);
-        cargarParadas(paradaFilePath); // Cargar las paradas nuevamente (tiempo muerto, problema de dependencias)
+        cargarParadas(paradaFilePath); // cargar las paradas nuevamente (tiempo muerto, problema de dependencias)
         paradas.removeIf(parada -> parada.getLinea().getParadas().isEmpty());
     }
 
@@ -131,9 +131,9 @@ public class Datos {
     }
 
     /**
-     * Obtiene la lista de líneas cargadas en el sistema.
+     * Obtiene la lista de lineas cargadas en el sistema.
      *
-     * @return la lista de líneas
+     * @return la lista de lineas
      */
     public List<Linea> getLineas() {
         return lineas;
@@ -149,18 +149,18 @@ public class Datos {
     }
 
     /**
-     * Obtiene el número total de pasajeros configurado en el sistema.
+     * Obtiene el numero total de pasajeros configurado en el sistema.
      *
-     * @return el número total de pasajeros
+     * @return el numero total de pasajeros
      */
     public int getTotalPasajeros() {
         return totalPasajeros;
     }
 
     /**
-     * Obtiene el número de recorridos configurados en el sistema.
+     * Obtiene el numero de recorridos configurados en el sistema.
      *
-     * @return el número de recorridos
+     * @return el numero de recorridos
      */
     public int getRecorridos() {
         return recorridos;
