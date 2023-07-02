@@ -10,7 +10,7 @@ import java.util.List;
 public class Colectivo {
     private String id;
     private int asientos;
-    private int capacidadMaxima;
+    private int totalPasajeros;
     private List<Pasajero> pasajeros;
     private Linea linea;
 
@@ -19,14 +19,14 @@ public class Colectivo {
      * 
      * @param id              el ID del colectivo
      * @param asientos        el numero total de asientos del colectivo
-     * @param capacidadMaxima la capacidad maxima de pasajeros del colectivo
+     * @param totalPasajeros  la capacidad maxima de pasajeros del colectivo
      * @param pasajeros       la lista de pasajeros actualmente en el colectivo
      * @param linea           la linea a la que pertenece el colectivo
      */
-    public Colectivo(String id, int asientos, int capacidadMaxima, List<Pasajero> pasajeros, Linea linea) {
+    public Colectivo(String id, int asientos, int totalPasajeros, List<Pasajero> pasajeros, Linea linea) {
         this.id = id;
         this.asientos = asientos;
-        this.capacidadMaxima = capacidadMaxima;
+        this.totalPasajeros = totalPasajeros;
         this.pasajeros = pasajeros;
         this.linea = linea;
     }
@@ -45,8 +45,8 @@ public class Colectivo {
      * 
      * @return la capacidad maxima de pasajeros del colectivo
      */
-    public int getCapacidadMaxima() {
-        return capacidadMaxima;
+    public int getTotalPasajeros() {
+        return totalPasajeros;
     }
 
     /**
@@ -96,7 +96,7 @@ public class Colectivo {
 
     @Override
     public String toString() {
-        return "Colectivo [id: " + id + "\nAsientos: " + asientos + "\ntotalPasajeros: " + capacidadMaxima
+        return "Colectivo [id: " + id + "\nAsientos: " + asientos + "\ntotalPasajeros: " + totalPasajeros
                 + "\npasajeros: " + pasajeros.size() + ", Linea: " + linea + "]\n";
     }
 }

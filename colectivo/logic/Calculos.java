@@ -2,10 +2,7 @@ package colectivo.logic;
 
 import java.util.List;
 import java.util.Random;
-import colectivo.model.Linea;
-import colectivo.model.Parada;
-import colectivo.model.Pasajero;
-import colectivo.model.Colectivo;
+import colectivo.model.*;
 
 /**
  * Clase que contiene metodos para realizar calculos relacionados con el sistema
@@ -23,21 +20,22 @@ public class Calculos {
      */
     public void generarPasajeros(List<Linea> lineas, int pasajerosTotal) {
         Random random = new Random();
-        for (Linea linea : lineas) {
-            for (int i = 0; i < linea.getParadas().size() - 1; i++) {
-                Parada parada = linea.getParadas().get(i);
-                if (pasajerosTotal <= 0)
-                    break;
-                int distribucionPasajeros = Math.min(random.nextInt(20), pasajerosTotal);
-                pasajerosTotal -= distribucionPasajeros;
-                for (int j = 0; j < distribucionPasajeros; j++) {
-                    Parada paradaDestino = linea.getParadas()
-                            .get(random.nextInt(linea.getParadas().size() - i - 1) + i + 1);
-                    Pasajero pasajero = new Pasajero(parada, paradaDestino);
-                    parada.getPasajeros().add(pasajero);
+        while (pasajerosTotal > 0)
+            for (Linea linea : lineas) {
+                for (int i = 0; i < linea.getParadas().size() - 1; i++) {
+                    Parada parada = linea.getParadas().get(i);
+                    if (pasajerosTotal <= 0)
+                        break;
+                    int distribucionPasajeros = random.nextInt(20);
+                    pasajerosTotal -= distribucionPasajeros;
+                    for (int j = 0; j < distribucionPasajeros; j++) {
+                        Parada paradaDestino = linea.getParadas()
+                                .get(random.nextInt(linea.getParadas().size() - i - 1) + i + 1);
+                        Pasajero pasajero = new Pasajero(parada, paradaDestino);
+                        parada.getPasajeros().add(pasajero);
+                    }
                 }
             }
-        }
     }
 
     /**
@@ -71,7 +69,7 @@ public class Calculos {
     public void calcularOcupacionPromedio(Colectivo colectivo, int pasajerosTransportados) {
         int totalTramos = colectivo.getLinea().getParadas().size() - 1;
         double promedioOcupacion = (double) pasajerosTransportados
-                / (double) (totalTramos * colectivo.getCapacidadMaxima());
+                / (double) (totalTramos * colectivo.getTotalPasajeros());
         System.out.println("Pasajeros transportados: " + pasajerosTransportados + ". Ocupación promedio: "
                 + (promedioOcupacion * 100) + "%");
     }

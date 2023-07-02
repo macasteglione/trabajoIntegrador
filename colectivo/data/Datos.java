@@ -53,7 +53,7 @@ public class Datos {
         lineas.removeIf(linea -> linea.getParadas().isEmpty()); // eliminar las lineas que no tienen paradas asociadas
         cargarColectivos(colectivoFilePath);
         cargarParadas(paradaFilePath); // cargar las paradas nuevamente (tiempo muerto, problema de dependencias)
-        paradas.removeIf(parada -> parada.getLinea().getParadas().isEmpty());
+        paradas.removeIf(parada -> parada.getLineas().isEmpty());
     }
 
     private void cargarLineas(String filePath) throws IOException {
@@ -65,8 +65,10 @@ public class Datos {
             List<Parada> paradasPorLinea = new ArrayList<>();
             for (int i = 1; i < data.length; i++) {
                 Parada parada = buscarParadaPorId(data[i]);
-                if (parada != null)
+                if (parada != null) {
                     paradasPorLinea.add(parada);
+                    parada.getLineas().add(buscarLineaPorId(id));
+                }
             }
             Linea linea = new Linea(id, paradasPorLinea, new ArrayList<>());
             lineas.add(linea);
@@ -81,9 +83,7 @@ public class Datos {
             String[] data = line.split(";");
             String id = data[0];
             String direccion = data[1];
-            String lineaID = data[2];
-            Linea linea = buscarLineaPorId(lineaID);
-            Parada parada = new Parada(id, direccion, linea, new ArrayList<>());
+            Parada parada = new Parada(id, direccion, new ArrayList<>());
             paradas.add(parada);
         }
         reader.close();

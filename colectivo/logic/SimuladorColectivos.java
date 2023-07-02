@@ -1,9 +1,7 @@
 package colectivo.logic;
 
 import colectivo.data.CargarArchivos;
-import colectivo.model.Colectivo;
-import colectivo.model.Parada;
-import colectivo.model.Pasajero;
+import colectivo.model.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -30,7 +28,7 @@ public class SimuladorColectivos {
             int recorridos = CargarArchivos.getRecorridos();
             System.out.println("Colectivo ID: " + colectivo.getId());
             System.out.println("Linea: " + colectivo.getLinea().getId());
-            System.out.println("Capacidad de pasajeros: " + colectivo.getCapacidadMaxima());
+            System.out.println("Capacidad de pasajeros: " + colectivo.getTotalPasajeros());
             System.out.println("Recorridos restantes: " + recorridos);
             System.out.println("Paradas visitadas:");
             int pasajerosTransportados = 0;
@@ -41,20 +39,21 @@ public class SimuladorColectivos {
                     for (Iterator<Pasajero> it = paradaActual.getPasajeros().iterator(); it.hasNext();) {
                         Pasajero pasajeroEnParada = it.next();
                         pasajeroEnParada.setEsperando(pasajeroEnParada.getEsperando() + 1);
-                        if (pasajeroEnParada.getParadaDestino().getLinea().getId().equals(colectivo.getLinea().getId())
-                                && colectivo.getPasajeros().size() != colectivo.getCapacidadMaxima()) {
-                            if (pasajeroEnParada.getEsperando() > 2)
-                                calificaciones.add(2);
-                            else if (pasajeroEnParada.getEsperando() == 2)
-                                calificaciones.add(3);
-                            else if (colectivo.getAsientosDisponibles() <= 0)
-                                calificaciones.add(4);
-                            else if (colectivo.getAsientosDisponibles() > 0)
-                                calificaciones.add(5);
-                            totalPasajerosSubieron++;
-                            colectivo.getPasajeros().add(pasajeroEnParada);
-                            it.remove();
-                        }
+                        for (Linea linea : pasajeroEnParada.getParadaDestino().getLineas())
+                            if (linea.getId().equals(colectivo.getLinea().getId())
+                                    && colectivo.getPasajeros().size() != colectivo.getTotalPasajeros()) {
+                                if (pasajeroEnParada.getEsperando() > 2)
+                                    calificaciones.add(2);
+                                else if (pasajeroEnParada.getEsperando() == 2)
+                                    calificaciones.add(3);
+                                else if (colectivo.getAsientosDisponibles() <= 0)
+                                    calificaciones.add(4);
+                                else if (colectivo.getAsientosDisponibles() > 0)
+                                    calificaciones.add(5);
+                                totalPasajerosSubieron++;
+                                colectivo.getPasajeros().add(pasajeroEnParada);
+                                it.remove();
+                            }
                     }
                     for (Iterator<Pasajero> it = colectivo.getPasajeros().iterator(); it.hasNext();) {
                         Pasajero pasajeroEnColectivo = it.next();

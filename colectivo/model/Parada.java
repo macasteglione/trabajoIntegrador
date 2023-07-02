@@ -1,5 +1,6 @@
 package colectivo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
 public class Parada {
     private String id;
     private String direccion;
-    private Linea linea;
+    private List<Linea> lineas;
     private List<Pasajero> pasajeros;
 
     /**
@@ -18,13 +19,12 @@ public class Parada {
      * 
      * @param id        el ID de la parada
      * @param direccion la direccion de la parada
-     * @param linea     la linea a la que pertenece la parada
      * @param pasajeros la lista de pasajeros en la parada
      */
-    public Parada(String id, String direccion, Linea linea, List<Pasajero> pasajeros) {
+    public Parada(String id, String direccion, List<Pasajero> pasajeros) {
         this.id = id;
         this.direccion = direccion;
-        this.linea = linea;
+        this.lineas = new ArrayList<>();
         this.pasajeros = pasajeros;
     }
 
@@ -47,12 +47,21 @@ public class Parada {
     }
 
     /**
-     * Obtiene la linea a la que pertenece la parada.
+     * Obtiene la lista de lineas a las que pertenece la parada.
      * 
-     * @return la linea a la que pertenece la parada
+     * @return la lista de lineas a las que pertenece la parada
      */
-    public Linea getLinea() {
-        return linea;
+    public List<Linea> getLineas() {
+        return lineas;
+    }
+
+    /**
+     * Establece la lista de lineas a las que pertenece la parada.
+     * 
+     * @param lineas la lista de lineas
+     */
+    public void setLineas(List<Linea> lineas) {
+        this.lineas = lineas;
     }
 
     /**
@@ -66,7 +75,10 @@ public class Parada {
 
     @Override
     public String toString() {
-        return "Parada [id: " + id + ", direccion: " + direccion + ", linea: " + linea.getId() + ", pasajeros: "
+        List<String> lineaIDs = new ArrayList<>();
+        for (Linea linea : lineas)
+            lineaIDs.add(linea.getId());
+        return "Parada [id: " + id + ", direccion: " + direccion + ", lineas: " + lineaIDs + ", pasajeros: "
                 + pasajeros.size() + "]\n";
     }
 }

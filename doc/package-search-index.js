@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"colectivo.app"},{"l":"colectivo.data"},{"l":"colectivo.logic"},{"l":"colectivo.model"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"colectivo.app"},{"l":"colectivo.data"},{"l":"colectivo.logic"},{"l":"colectivo.model"}]
