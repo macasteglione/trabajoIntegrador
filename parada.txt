@@ -7,7 +7,7 @@ P6;8 De Marzo, 385
 P7;Abraham Mathews, 2525
 P8;Agustin Pujol, 374
 P9;Alto Rio Senguer, 1311
-P10;Avenida Domec Garc�a Norte, 239
+P10;Avenida Domec Garcia Norte, 239
 P11;Avenida Juan Muzzio, 258
 P12;Avenida Juan Muzzio, 482
 P13;Avenida Julio Argentino Roca, 1567

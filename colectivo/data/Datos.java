@@ -17,21 +17,11 @@ import colectivo.model.Parada;
  * @author Matias Casteglione
  */
 public class Datos {
-    private List<Colectivo> colectivos;
-    private List<Linea> lineas;
-    private List<Parada> paradas;
+    private List<Colectivo> colectivos = new ArrayList<>();
+    private List<Linea> lineas = new ArrayList<>();
+    private List<Parada> paradas = new ArrayList<>();
     private int totalPasajeros;
     private int recorridos;
-
-    /**
-     * Constructor de la clase Datos.
-     * Inicializa las listas de colectivos, líneas y paradas.
-     */
-    public Datos() {
-        colectivos = new ArrayList<>();
-        lineas = new ArrayList<>();
-        paradas = new ArrayList<>();
-    }
 
     /**
      * Carga la configuracion del sistema desde un archivo de propiedades.

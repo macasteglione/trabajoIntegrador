@@ -18,7 +18,7 @@ public class Calculos {
      * @param lineas         la lista de lineas
      * @param pasajerosTotal el numero total de pasajeros a generar
      */
-    public void generarPasajeros(List<Linea> lineas, int pasajerosTotal) {
+    public static void generarPasajeros(List<Linea> lineas, int pasajerosTotal) {
         Random random = new Random();
         while (pasajerosTotal > 0)
             for (Linea linea : lineas) {
@@ -44,7 +44,7 @@ public class Calculos {
      *
      * @param calificaciones la lista de calificaciones de los pasajeros
      */
-    public void calcularIndiceSatisfaccion(List<Integer> calificaciones) {
+    public static void calcularIndiceSatisfaccion(List<Integer> calificaciones) {
         int[] calificacionesCont = new int[6];
         int totalPasajeros = calificaciones.size();
         double totalPuntos = 0;
@@ -66,7 +66,7 @@ public class Calculos {
      * @param colectivo              el colectivo
      * @param pasajerosTransportados el numero de pasajeros transportados
      */
-    public void calcularOcupacionPromedio(Colectivo colectivo, int pasajerosTransportados) {
+    public static void calcularOcupacionPromedio(Colectivo colectivo, int pasajerosTransportados) {
         int totalTramos = colectivo.getLinea().getParadas().size() - 1;
         double promedioOcupacion = (double) pasajerosTransportados
                 / (double) (totalTramos * colectivo.getTotalPasajeros());

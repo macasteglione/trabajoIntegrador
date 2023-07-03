@@ -19,7 +19,6 @@ public class SimuladorColectivos {
      */
     public void simularViajes() {
         CargarArchivos.cargarDatos();
-        Calculos calc = new Calculos();
         List<Colectivo> colectivos = CargarArchivos.getColectivos();
         List<Integer> calificaciones = new ArrayList<>();
         int pasajerosConfig = CargarArchivos.getTotalPasajerosConfig();
@@ -75,10 +74,10 @@ public class SimuladorColectivos {
                 recorridos--;
             }
             pasajerosTransportadosTotal += pasajerosTransportados;
-            calc.calcularOcupacionPromedio(colectivo, pasajerosTransportados);
+            Calculos.calcularOcupacionPromedio(colectivo, pasajerosTransportados);
         }
         for (int i = 0; i < pasajerosConfig - pasajerosTransportadosTotal; i++)
             calificaciones.add(1);
-        calc.calcularIndiceSatisfaccion(calificaciones);
+        Calculos.calcularIndiceSatisfaccion(calificaciones);
     }
 }

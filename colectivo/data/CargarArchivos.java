@@ -28,7 +28,6 @@ public class CargarArchivos {
      */
     public static void cargarDatos() {
         Datos system = new Datos();
-        Calculos calc = new Calculos();
         try {
             system.cargarConfiguracion("config.properties");
         } catch (IOException e) {
@@ -39,7 +38,7 @@ public class CargarArchivos {
         colectivos = system.getColectivos();
         recorridos = system.getRecorridos();
         totalPasajerosConfig = system.getTotalPasajeros();
-        calc.generarPasajeros(lineas, totalPasajerosConfig);
+        Calculos.generarPasajeros(lineas, totalPasajerosConfig);
     }
 
     /**
