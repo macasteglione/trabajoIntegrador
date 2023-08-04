@@ -2,6 +2,7 @@ package colectivo.logic;
 
 import colectivo.data.CargarArchivos;
 import colectivo.model.*;
+import colectivo.ui.MostrarSimulacion;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,16 +26,11 @@ public class SimuladorColectivos {
         int pasajerosTransportadosTotal = 0;
         for (Colectivo colectivo : colectivos) {
             int recorridos = CargarArchivos.getRecorridos();
-            System.out.println("Colectivo ID: " + colectivo.getId());
-            System.out.println("Linea: " + colectivo.getLinea().getId());
-            System.out.println("Capacidad de pasajeros: " + colectivo.getTotalPasajeros());
-            System.out.println("Recorridos restantes: " + recorridos);
-            System.out.println("Paradas visitadas:");
+            MostrarSimulacion.mostrarDatosColectivo(colectivo, recorridos);
             int pasajerosTransportados = 0;
             while (recorridos > 0) {
                 for (Parada paradaActual : colectivo.getLinea().getParadas()) {
-                    int totalPasajerosSubieron = 0;
-                    int totalPasajerosBajaron = 0;
+                    int totalPasajerosSubieron = 0, totalPasajerosBajaron = 0;
                     for (Iterator<Pasajero> it = paradaActual.getPasajeros().iterator(); it.hasNext();) {
                         Pasajero pasajeroEnParada = it.next();
                         pasajeroEnParada.setEsperando(pasajeroEnParada.getEsperando() + 1);
@@ -62,14 +58,8 @@ public class SimuladorColectivos {
                             it.remove();
                         }
                     }
-                    System.out.println(
-                            "- Parada ID: " + paradaActual.getId() + ", Dirección: " + paradaActual.getDireccion());
-                    System.out.println("Asientos disponibles: " + colectivo.getAsientosDisponibles());
-                    System.out.println("Pasajeros en el colectivo: " + colectivo.getPasajeros().size());
-                    System.out.println("  Pasajeros que subieron: " + totalPasajerosSubieron);
-                    System.out.println("  Pasajeros que bajaron: " + totalPasajerosBajaron);
-                    System.out
-                            .println("Pasajeros esperando en la parada: " + paradaActual.getPasajeros().size() + "\n");
+                    MostrarSimulacion.mostrarRecorridos(colectivo, paradaActual, totalPasajerosBajaron,
+                            totalPasajerosSubieron);
                 }
                 recorridos--;
             }

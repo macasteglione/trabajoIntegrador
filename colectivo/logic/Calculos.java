@@ -3,6 +3,7 @@ package colectivo.logic;
 import java.util.List;
 import java.util.Random;
 import colectivo.model.*;
+import colectivo.ui.MostrarSimulacion;
 
 /**
  * Clase que contiene metodos para realizar calculos relacionados con el sistema
@@ -54,9 +55,7 @@ public class Calculos {
                 totalPuntos += calificacion;
             }
         double indiceSatisfaccion = totalPuntos / (100 * totalPasajeros);
-        System.out.println("Indice de satisfacción del cliente: " + (indiceSatisfaccion * 100) + "%");
-        for (int i = 5; i >= 1; i--)
-            System.out.println(calificacionesCont[i] + " pasajeros calificaron con " + i + " el servicio");
+        MostrarSimulacion.mostrarIndiceSatisfaccion(indiceSatisfaccion, calificacionesCont);
     }
 
     /**
@@ -70,7 +69,6 @@ public class Calculos {
         int totalTramos = colectivo.getLinea().getParadas().size() - 1;
         double promedioOcupacion = (double) pasajerosTransportados
                 / (double) (totalTramos * colectivo.getTotalPasajeros());
-        System.out.println("Pasajeros transportados: " + pasajerosTransportados + ". Ocupación promedio: "
-                + (promedioOcupacion * 100) + "%");
+        MostrarSimulacion.mostrarOcupacionPromedio(pasajerosTransportados, promedioOcupacion);
     }
 }
